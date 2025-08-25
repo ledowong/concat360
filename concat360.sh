@@ -95,9 +95,9 @@ if (( ${#matches[@]} == 0 )); then
   exit 1
 fi
 
-for f in $(printf '%s\n' "${matches[@]}" | sort); do
+while IFS= read -r f; do
   echo "file '$(basename "$f")'" >> "$listfile"
-done
+done < <(printf '%s\n' "${matches[@]}" | sort)
 
 count=$(wc -l < "$listfile" | tr -d '[:space:]')
 echo "Created: $listfile ($count entries)"
